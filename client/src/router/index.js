@@ -1,18 +1,20 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; // as для изменения названия файла
-import SignUp from '../pages/SignUp';
-import SignIn from '../pages/SignIn';
+import PublicRouter from './public';
+import PrivateRouter from './private';
+
+import store from 'store';
 
 export default () => {
+  console.log('routerconsole', store.isAuth);
   return (
     <Router>
       <Switch>
-        <Route exact path="/hello" component={ () => <h1>Hello</h1>} />
-        <Route exact path="/" component={ () => <h1>Goodbye</h1>} />
-        <Route exact path="/sign-up" component={SignUp} />
-        <Route exact path="/sign-in" component={SignIn} />
+        <Route path="/">
+          <PublicRouter/>
+          {store.isAuth ? <PrivateRouter/> : null}
+        </Route>
       </Switch>
-      {/* это jsx коммент. И все чтот выше jsx. path="/" всегда должен быть в конце */}
     </Router>
   );
 };

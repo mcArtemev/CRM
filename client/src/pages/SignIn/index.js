@@ -1,26 +1,34 @@
 
 import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Button, Form, Grid, Header, Image, Message, Segment, Checkbox } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 import sign from 'api/sign';
 import { user } from '../../../../validation'; // настроить Alias
 import { friendlyValidationResult } from '../../helpers';
+import store from 'store';
 
-const SignUp = () => {
+
+const SignIn = () => {
   const [state, setState] = useState({
     gender: null
   });
+  const history = useHistory();
   const formik = useFormik({
     initialValues: {
       email: '',
       password: ''
     },
     validate: (data) => {
-      return friendlyValidationResult(user.signUp.validate(data, { abortEarly: false }));
+      return friendlyValidationResult(user.signIn.validate(data, { abortEarly: false }));
     },
     onSubmit: async values => {
       try {
-        sign.signIn(values);
+        console.log(values);
+        const { data } = await sign.signIn(values);
+        store.setAuth(true);
+        store.setUser(data);
+        window.location = '/page';
       } catch (error) {
         console.log(error);
       }
@@ -64,11 +72,11 @@ const SignUp = () => {
           </Segment>
         </Form>
         <Message>
-          Haven`t an account?<a href='#'> Sign Up</a>
+          Haven`t an account?<Link to="/sign-up"> Sign Up</Link>
         </Message>
       </Grid.Column>
     </Grid>
   );
 };
 
-export default SignUp;
+export default SignIn;

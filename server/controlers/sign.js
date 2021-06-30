@@ -1,7 +1,7 @@
 import bcrypt, { hash } from 'bcryptjs';
 
 import { User } from '../models';
-import { userValidation } from '../../validation';
+import { user as userValidation } from '../../validation';
 import { server } from '../../config';
 
 export default {
@@ -26,8 +26,6 @@ export default {
         }
         return res.status(200).send(user);
       });
-      await user.save();
-      res.status(200).send(user);
     } catch (error) {
       if (error.isJoi) {
         res.status(400).send(error);
@@ -37,9 +35,10 @@ export default {
     }
   },
 
+
   async SignOut(req, res, next) {
     try {
-      req.session.destroy(); // req-запрос
+      req.session.destroy();
       res.status(200).clearCookie('connect.sid').send('You have been successfully logged out!'); // почитать про clearCookie //res-ответ
     } catch (error) {
       next(error);

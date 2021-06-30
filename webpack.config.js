@@ -38,7 +38,8 @@ const client = (env, argv) => {
         components: path.resolve(__dirname, './client/src/components/'),
         helpers: path.resolve(__dirname, './client/src/helpers/'),
         pages: path.resolve(__dirname, './client/src/pages/'),
-        validation: path.resolve(__dirname, './validation/')
+        validation: path.resolve(__dirname, './validation/'),
+        store: path.resolve(__dirname, './client/src/store/')
       }
     },
     devServer: {
@@ -47,7 +48,7 @@ const client = (env, argv) => {
       hot: true,
       proxy: {
         '/api': {
-          target: 'http://localhost:8000'
+          target: 'http://localhost:8000/'
         }
       }
     },

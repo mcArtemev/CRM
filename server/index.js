@@ -14,9 +14,11 @@ passport.deserializeUser(passportMiddlewares.deserializeUser);
 app
   .use(express.urlencoded())
   .use(passport.initialize())
+  .use(passport.session())
   .use(session)
   .use('/api/v1', router)
   .use((error, req, res, next) => {
+    console.log(error);
     return res.status(500).json({ error: error.toString() });
   });
 app.listen(server.port, () => {

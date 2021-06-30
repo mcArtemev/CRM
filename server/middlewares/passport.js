@@ -3,6 +3,7 @@ import { User } from '../models';
 
 export const localStrategy = new LocalStrategy(async (email, password, done) => { // почитать про done
   try {
+    console.log('error');
     const user = await User.findOne({ email });
     if (!user) {
       return done(null, false, { message: 'Incorrect email.' });
@@ -22,6 +23,7 @@ export const serializeUser = (user, done) => {
 
 export const deserializeUser = async (id, done) => {
   try {
+    console.log('error2');
     const user = await User.findById(id);
     if (user) done(null, user);
   } catch (err) {
@@ -30,6 +32,7 @@ export const deserializeUser = async (id, done) => {
 };
 
 export const checkAuth = (req, res, next) => {
+  console.log('error3');
   req.isAuthenticated()
     ? next()
     : res.status(401).send({ message: 'Unauthorized' });

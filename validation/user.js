@@ -1,10 +1,10 @@
 import joi from 'joi';
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-const emailSchema = joi
+const email = joi
   .string()
   .trim()
-  .empty('')
+  .empty()
   .min(4)
   .lowercase()
   .email({ tlds: { allow: false } })
@@ -15,38 +15,38 @@ const emailSchema = joi
   });
 
 
-const passwordSchema = joi
+const password = joi
   .string()
-  .empty('')
+  .empty()
   .min(4)
   .messages({
     'string.empty': 'Поле Пароль пустое.',
     'string.min': 'Пароль слишком короткий - должно быть минимум 4 символа.'
   });
 
-const nameSchema = joi
+const name = joi
   .string()
-  .empty('')
+  .empty()
   .messages({
     'object.unknown': 'Объект неизвестен',
     'string.empty': 'Поле Имя пустое.',
     'string.min': 'Имя слишком короткое.'
   });
 
-const surnameSchema = joi
+const surname = joi
   .string()
   .trim()
-  .empty('')
+  .empty()
   .min(2)
   .messages({
     'string.empty': 'Поле Фамилия пустое.',
     'string.min': 'Фамилия слишком короткая.'
   });
 
-const phoneSchema = joi
+const phone = joi
   .string()
   .trim()
-  .empty('')
+  .empty()
   .min(8)
   .max(15)
   .pattern(phoneRegExp)
@@ -57,7 +57,7 @@ const phoneSchema = joi
     'string.pattern.base': 'Номер введен некорректно.'
   });
 
-// const birthdaySchema = joi
+// const birthday = joi
 //   .date()
 //   .iso()
 //   .empty()
@@ -65,7 +65,7 @@ const phoneSchema = joi
 //     'string.empty': 'Birthday is empty.'
 //   });
 
-const genderSchema = joi
+const gender = joi
   .boolean()
   .messages({
     'boolean.base': 'Пол не выбран.'
@@ -74,23 +74,53 @@ const genderSchema = joi
 const signUp = joi
   .object()
   .keys({
-    name: nameSchema,
-    surname: surnameSchema,
-    email: emailSchema,
-    gender: genderSchema,
-    password: passwordSchema
+    name,
+    surname,
+    email,
+    gender,
+    password,
+    passwordConfirmation: joi
+      .string()
+      .empty('')
+      .required()
+      .valid(joi.ref('password'))
+      .messages({
+        'string.empty': 'Подтвердите пароль',
+        'any.only': 'Пароли не совпадают',
+        'any.required': 'Подтвердите пароль'
+      })
   });
 
 
 const signIn = joi
   .object()
   .keys({
-    email: emailSchema,
-    password: passwordSchema.required()
-  }).required();
+    email,
+    password
+  });
+
+const editProfile = joi
+  .object()
+  .keys({
+    email,
+    name,
+    surname,
+    password: password.optional(),
+    passwordConfirmation: joi
+      .string()
+      .empty('')
+      .optional()
+      .valid(joi.ref('password'))
+      .messages({
+        'string.empty': 'Подтвердите пароль',
+        'any.only': 'Пароли не совпадают',
+        'any.required': 'Подтвердите пароль'
+      })
+  });
 
 
 export default {
   signUp,
-  signIn
+  signIn,
+  editProfile
 };

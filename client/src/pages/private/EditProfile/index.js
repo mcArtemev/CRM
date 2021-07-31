@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Grid, Header, Image, Segment, Checkbox } from 'semantic-ui-react';
+import { Button, Form, Grid, Header, Image, Segment } from 'semantic-ui-react';
 import { useFormik } from 'formik';
 import { user as userValidation } from 'validation'; // настроить Alias
 import user from 'api/user';

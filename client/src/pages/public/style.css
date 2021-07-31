@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+:root {
+    --main-text-color: #fff;
+    --main-title-color: #ff6804;
+}
+
+
+h1, h2, h3 {
+    color: var(--main-title-color) !important;
+}
+
+p {
+    text-decoration: none !important;
+    color: var(--main-text-color);
+}
+
+p:hover {
+    color: var(--main-title-color);
+}
+
+.ui.header+p {
+    font-size: 2em;
+    color: var(--main-text-color);
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    text-shadow:rgb(27 55 67) 1px 1px 20px, rgb(27 55 67) 1px 1px 20px, rgb(27 55 67) 1px 1px 10px, rgb(27 55 67) 1px 1px 20px;
+    text-align: center;
+}
+
+h1.ui.header {
+    display: flex;
+    justify-content: center;
+    text-shadow:rgb(27 55 67) 1px 1px 20px, rgb(27 55 67) 1px 1px 20px, rgb(27 55 67) 1px 1px 10px, rgb(27 55 67) 1px 1px 20px
+}
+
+.ui.image {
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-attachment: fixed;
+    
+    color: transparent;
+}
+.ui.grid.container {
+    width: auto !important;
+}
+.ui.container {
+    padding-left: 0 !important;
+    
+    width: 100%;
+    
+}
+
+.mainpage-container {
+    background: rgb(21 35 46);
+}
+
+.mainpage-segment {
+    height: 100vh;
+    
+}
+
+.gridrow {
+    padding-left: 50px !important;
+}
+
+
+    
